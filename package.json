@@ -1,6 +1,6 @@
 {
 	"name": "api-perf-budget",
-	"version": "0.0.0-development",
+	"version": "1.0.0",
 	"description": "Define and enforce per-route latency budgets for Node.js APIs in CI",
 	"license": "MIT",
 	"repository": "mstuart/api-perf-budget",
