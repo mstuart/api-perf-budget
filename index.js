@@ -71,7 +71,7 @@ async function measureSingleRequest(url, method, headers, body) {
 			headers,
 			body: method === 'GET' || method === 'HEAD' ? undefined : body,
 		});
-	} catch {} // eslint-disable-line @stylistic/curly-newline -- conflicts with unicorn's empty-brace-spaces rule for empty catch blocks
+	} catch {}
 
 	return performance.now() - start;
 }
