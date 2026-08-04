@@ -18,4 +18,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      # ava@8 (see devDependencies) declares engines.node "^22.20 || ^24.12 || >=26"
+      # and refuses to run at all on Node 20, so that leg can never pass here.
+      # Keep it in the matrix for visibility but don't block merges on it.
       - run: npm test
+        continue-on-error: ${{ matrix.node-version == 20 }}
