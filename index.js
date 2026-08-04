@@ -45,7 +45,7 @@ export async function measureRoute(url, options = {}) {
 		latencies.push(...results);
 	}
 
-	const sorted = [...latencies].sort((a, b) => a - b);
+	const sorted = [...latencies].toSorted((a, b) => a - b);
 	const sum = sorted.reduce((a, b) => a + b, 0);
 
 	return {
@@ -71,7 +71,7 @@ async function measureSingleRequest(url, method, headers, body) {
 			headers,
 			body: method === 'GET' || method === 'HEAD' ? undefined : body,
 		});
-	} catch {}
+	} catch {} // eslint-disable-line @stylistic/curly-newline -- conflicts with unicorn's empty-brace-spaces rule for empty catch blocks
 
 	return performance.now() - start;
 }
