@@ -45,7 +45,14 @@
 	},
 	"xo": {
 		"rules": {
-			"@typescript-eslint/naming-convention": "off"
+			"@typescript-eslint/naming-convention": "off",
+			"@stylistic/curly-newline": [
+				"error",
+				{
+					"multiline": true,
+					"consistent": true
+				}
+			]
 		}
 	}
 }

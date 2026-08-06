@@ -45,7 +45,7 @@ export async function measureRoute(url, options = {}) {
 		latencies.push(...results);
 	}
 
-	const sorted = [...latencies].sort((a, b) => a - b);
+	const sorted = latencies.toSorted((a, b) => a - b);
 	const sum = sorted.reduce((a, b) => a + b, 0);
 
 	return {
