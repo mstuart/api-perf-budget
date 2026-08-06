@@ -1,7 +1,16 @@
-# api-perf-budget
+<div align="center">
+  <img src="docs/assets/logo.svg" alt="api-perf-budget — Define and enforce per-route latency budgets for Node.js APIs in CI" width="720">
+</div>
 
-> Define and enforce per-route latency budgets for Node.js APIs in CI
+<p align="center"><strong>Define and enforce per-route latency budgets for Node.js APIs in CI</strong></p>
 
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://www.npmjs.com/package/api-perf-budget"><img src="https://img.shields.io/npm/v/api-perf-budget?label=npm" alt="npm"></a>
+  <img src="https://img.shields.io/badge/node-%E2%89%A520-339933.svg" alt="Node 20+">
+</p>
+
+---
 ## Install
 
 ```sh
