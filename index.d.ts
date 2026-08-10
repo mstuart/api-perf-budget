@@ -1,98 +1,96 @@
-export type Budget = {
-	/** Maximum allowed p50 latency in milliseconds. */
-	readonly p50?: number;
+export interface Budget {
+  /** Maximum allowed p50 latency in milliseconds. */
+  readonly p50?: number;
 
-	/** Maximum allowed p75 latency in milliseconds. */
-	readonly p75?: number;
+  /** Maximum allowed p75 latency in milliseconds. */
+  readonly p75?: number;
 
-	/** Maximum allowed p90 latency in milliseconds. */
-	readonly p90?: number;
+  /** Maximum allowed p90 latency in milliseconds. */
+  readonly p90?: number;
 
-	/** Maximum allowed p95 latency in milliseconds. */
-	readonly p95?: number;
+  /** Maximum allowed p95 latency in milliseconds. */
+  readonly p95?: number;
 
-	/** Maximum allowed p99 latency in milliseconds. */
-	readonly p99?: number;
-};
+  /** Maximum allowed p99 latency in milliseconds. */
+  readonly p99?: number;
+}
 
-export type Measurements = {
-	/** 50th percentile latency in milliseconds. */
-	readonly p50: number;
+export interface Measurements {
+  /** Total number of requests measured. */
+  readonly count: number;
 
-	/** 75th percentile latency in milliseconds. */
-	readonly p75: number;
+  /** Maximum latency in milliseconds. */
+  readonly max: number;
 
-	/** 90th percentile latency in milliseconds. */
-	readonly p90: number;
+  /** Mean latency in milliseconds. */
+  readonly mean: number;
 
-	/** 95th percentile latency in milliseconds. */
-	readonly p95: number;
+  /** Median latency in milliseconds. */
+  readonly median: number;
 
-	/** 99th percentile latency in milliseconds. */
-	readonly p99: number;
+  /** Minimum latency in milliseconds. */
+  readonly min: number;
+  /** 50th percentile latency in milliseconds. */
+  readonly p50: number;
 
-	/** Minimum latency in milliseconds. */
-	readonly min: number;
+  /** 75th percentile latency in milliseconds. */
+  readonly p75: number;
 
-	/** Maximum latency in milliseconds. */
-	readonly max: number;
+  /** 90th percentile latency in milliseconds. */
+  readonly p90: number;
 
-	/** Mean latency in milliseconds. */
-	readonly mean: number;
+  /** 95th percentile latency in milliseconds. */
+  readonly p95: number;
 
-	/** Median latency in milliseconds. */
-	readonly median: number;
+  /** 99th percentile latency in milliseconds. */
+  readonly p99: number;
+}
 
-	/** Total number of requests measured. */
-	readonly count: number;
-};
-
-export type MeasureRouteOptions = {
-	/**
-	Number of requests to send.
-	@default 100
+export interface MeasureRouteOptions {
+  /**
+	Request body for POST/PUT/PATCH requests.
 	*/
-	readonly requests?: number;
+  readonly body?: string;
 
-	/**
+  /**
 	Number of concurrent requests per batch.
 	@default 10
 	*/
-	readonly concurrency?: number;
+  readonly concurrency?: number;
 
-	/**
+  /**
+	HTTP headers to include.
+	*/
+  readonly headers?: Record<string, string>;
+
+  /**
 	HTTP method.
 	@default 'GET'
 	*/
-	readonly method?: string;
-
-	/**
-	HTTP headers to include.
+  readonly method?: string;
+  /**
+	Number of requests to send.
+	@default 100
 	*/
-	readonly headers?: Record<string, string>;
+  readonly requests?: number;
+}
 
-	/**
-	Request body for POST/PUT/PATCH requests.
-	*/
-	readonly body?: string;
-};
+export interface Violation {
+  readonly actual: number;
+  readonly limit: number;
+  readonly metric: string;
+}
 
-export type Violation = {
-	readonly metric: string;
-	readonly actual: number;
-	readonly limit: number;
-};
+export interface BudgetCheckResult {
+  readonly passed: boolean;
+  readonly violations: Violation[];
+}
 
-export type BudgetCheckResult = {
-	readonly passed: boolean;
-	readonly violations: Violation[];
-};
-
-export type RouteResult = {
-	readonly measurements: Measurements;
-	readonly budget: Budget;
-	readonly result: BudgetCheckResult;
-};
+export interface RouteResult {
+  readonly budget: Budget;
+  readonly measurements: Measurements;
+  readonly result: BudgetCheckResult;
+}
 
 /**
 Define latency budgets for API routes.
@@ -110,7 +108,9 @@ const budgets = defineBudget({
 });
 ```
 */
-export function defineBudget(budgets: Record<string, Budget>): Record<string, Budget>;
+export function defineBudget(
+  budgets: Record<string, Budget>
+): Record<string, Budget>;
 
 /**
 Measure HTTP route latency by sending requests and collecting timing data.
@@ -131,7 +131,10 @@ const measurements = await measureRoute('http://localhost:3000/api/users', {
 console.log(measurements.p95);
 ```
 */
-export function measureRoute(url: string, options?: MeasureRouteOptions): Promise<Measurements>;
+export function measureRoute(
+  url: string,
+  options?: MeasureRouteOptions
+): Promise<Measurements>;
 
 /**
 Check measurements against a budget.
@@ -149,7 +152,10 @@ console.log(result.passed);
 // => true
 ```
 */
-export function checkBudget(measurements: Measurements, budget: Budget): BudgetCheckResult;
+export function checkBudget(
+  measurements: Measurements,
+  budget: Budget
+): BudgetCheckResult;
 
 /**
 Format route results as a human-readable report.
@@ -168,7 +174,9 @@ const report = formatResults({
 console.log(report);
 ```
 */
-export function formatResults(routeResults: Record<string, RouteResult>): string;
+export function formatResults(
+  routeResults: Record<string, RouteResult>
+): string;
 
 /**
 Calculate a percentile from a sorted array of values.
