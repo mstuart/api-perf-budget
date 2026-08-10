@@ -1,49 +1,49 @@
 {
-	"name": "api-perf-budget",
-	"version": "1.0.0",
-	"description": "Define and enforce per-route latency budgets for Node.js APIs in CI",
-	"license": "MIT",
-	"repository": "mstuart/api-perf-budget",
-	"author": {
-		"name": "Mark Stuart",
-		"email": "mstuart@users.noreply.github.com",
-		"url": "https://github.com/mstuart"
-	},
-	"type": "module",
-	"exports": {
-		".": {
-			"types": "./index.d.ts",
-			"default": "./index.js"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=22"
-	},
-	"scripts": {
-		"test": "ava && tsd",
-		"check": "ultracite check",
-		"fix": "ultracite fix"
-	},
-	"keywords": [
-		"performance",
-		"budget",
-		"latency",
-		"api",
-		"route",
-		"ci",
-		"benchmark",
-		"p95",
-		"p99",
-		"endpoint"
-	],
-	"dependencies": {
-		"perf-fn": "^1.0.0"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.5.6",
-		"ava": "^8",
-		"tsd": "^0.33",
-		"ultracite": "7.10.2"
-	}
+  "name": "api-perf-budget",
+  "version": "1.0.0",
+  "description": "Define and enforce per-route latency budgets for Node.js APIs in CI",
+  "keywords": [
+    "performance",
+    "budget",
+    "latency",
+    "api",
+    "route",
+    "ci",
+    "benchmark",
+    "p95",
+    "p99",
+    "endpoint"
+  ],
+  "repository": "mstuart/api-perf-budget",
+  "license": "MIT",
+  "author": {
+    "name": "Mark Stuart",
+    "email": "mstuart@users.noreply.github.com",
+    "url": "https://github.com/mstuart"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "scripts": {
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "test": "ava && tsd"
+  },
+  "dependencies": {
+    "perf-fn": "^1.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.6",
+    "ava": "^8",
+    "tsd": "^0.33",
+    "ultracite": "7.10.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }
