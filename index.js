@@ -56,6 +56,14 @@ export async function measureRoute(url, options = {}) {
     body,
   } = options;
 
+  if (!Number.isInteger(concurrency) || concurrency <= 0) {
+    throw new TypeError("concurrency must be a positive integer");
+  }
+
+  if (!Number.isInteger(requestCount) || requestCount <= 0) {
+    throw new TypeError("requests must be a positive integer");
+  }
+
   const latencies = await measureBatches(
     url,
     method,

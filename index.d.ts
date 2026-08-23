@@ -54,6 +54,7 @@ export interface MeasureRouteOptions {
 
   /**
 	Number of concurrent requests per batch.
+	Must be a positive integer.
 	@default 10
 	*/
   readonly concurrency?: number;
@@ -70,6 +71,7 @@ export interface MeasureRouteOptions {
   readonly method?: string;
   /**
 	Number of requests to send.
+	Must be a positive integer.
 	@default 100
 	*/
   readonly requests?: number;
