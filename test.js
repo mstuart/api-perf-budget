@@ -135,6 +135,50 @@ test("measureRoute handles POST method", async (t) => {
   t.true(result.p50 > 0);
 });
 
+test.serial("measureRoute rejects failed requests", async (t) => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = () => Promise.reject(new Error("network unavailable"));
+
+  try {
+    await t.throwsAsync(
+      () =>
+        measureRoute("https://example.invalid", {
+          concurrency: 1,
+          requests: 1,
+        }),
+      { message: "network unavailable" }
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+for (const invalidConcurrency of [-1, 0, 1.5, "1"]) {
+  test(`measureRoute rejects concurrency ${JSON.stringify(invalidConcurrency)}`, async (t) => {
+    await t.throwsAsync(
+      () =>
+        measureRoute("https://example.invalid", {
+          concurrency: invalidConcurrency,
+          requests: 1,
+        }),
+      { message: "concurrency must be a positive integer" }
+    );
+  });
+}
+
+for (const invalidRequests of [-1, 0, 1.5, "1"]) {
+  test(`measureRoute rejects requests ${JSON.stringify(invalidRequests)}`, async (t) => {
+    await t.throwsAsync(
+      () =>
+        measureRoute("https://example.invalid", {
+          concurrency: 1,
+          requests: invalidRequests,
+        }),
+      { message: "requests must be a positive integer" }
+    );
+  });
+}
+
 // CheckBudget
 
 test("checkBudget passes when within budget", (t) => {

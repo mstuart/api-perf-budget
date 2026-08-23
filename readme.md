@@ -74,14 +74,14 @@ The URL to measure.
 Type: `number`\
 Default: `100`
 
-Number of requests to send.
+Number of requests to send. Must be a positive integer.
 
 ##### concurrency
 
 Type: `number`\
 Default: `10`
 
-Number of concurrent requests per batch.
+Number of concurrent requests per batch. Must be a positive integer.
 
 ##### method
 
