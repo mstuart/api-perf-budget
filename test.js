@@ -135,6 +135,22 @@ test("measureRoute handles POST method", async (t) => {
   t.true(result.p50 > 0);
 });
 
+test.serial('measureRoute rejects failed requests', async t => {
+	const originalFetch = globalThis.fetch;
+	globalThis.fetch = async () => {
+		throw new Error('network unavailable');
+	};
+
+	try {
+		await t.throwsAsync(
+			() => measureRoute('https://example.invalid', {requests: 1, concurrency: 1}),
+			{message: 'network unavailable'},
+		);
+	} finally {
+		globalThis.fetch = originalFetch;
+	}
+});
+
 // CheckBudget
 
 test("checkBudget passes when within budget", (t) => {
