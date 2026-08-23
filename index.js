@@ -85,15 +85,11 @@ export async function measureRoute(url, options = {}) {
 async function measureSingleRequest(url, method, headers, body) {
   const start = performance.now();
 
-  try {
-    await fetch(url, {
-      body: method === "GET" || method === "HEAD" ? undefined : body,
-      headers,
-      method,
-    });
-  } catch {
-    // A failed request still contributes its elapsed time to the measurement.
-  }
+  await fetch(url, {
+    body: method === "GET" || method === "HEAD" ? undefined : body,
+    headers,
+    method,
+  });
 
   return performance.now() - start;
 }
