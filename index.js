@@ -29,7 +29,10 @@ async function measureBatches(url, method, headers, body, count, concurrency) {
     );
     // Batches must remain sequential to enforce the requested concurrency cap.
     // biome-ignore lint/performance/noAwaitInLoops: intentional bounded batching
-    results.push(...(await Promise.all(batch)));
+    const batchResults = await Promise.all(batch);
+    for (const result of batchResults) {
+      results.push(result);
+    }
   }
 
   return results;
