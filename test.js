@@ -122,6 +122,21 @@ test("measureRoute count matches requested count", async (t) => {
   t.is(result.count, 15);
 });
 
+test.serial("measureRoute handles many sequential batches", async (t) => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response();
+
+  try {
+    const result = await measureRoute("https://example.test", {
+      concurrency: 1,
+      requests: 20_000,
+    });
+    t.is(result.count, 20_000);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("measureRoute handles POST method", async (t) => {
   const result = await measureRoute(TEST_URL, {
     body: JSON.stringify({ name: "test" }),

@@ -19,32 +19,20 @@ export function defineBudget(budgets) {
   return { ...budgets };
 }
 
-async function measureBatches(
-  url,
-  method,
-  headers,
-  body,
-  remaining,
-  concurrency
-) {
-  if (remaining <= 0) {
-    return [];
+async function measureBatches(url, method, headers, body, count, concurrency) {
+  const results = [];
+
+  while (results.length < count) {
+    const batchSize = Math.min(concurrency, count - results.length);
+    const batch = Array.from({ length: batchSize }, () =>
+      measureSingleRequest(url, method, headers, body)
+    );
+    // Batches must remain sequential to enforce the requested concurrency cap.
+    // biome-ignore lint/performance/noAwaitInLoops: intentional bounded batching
+    results.push(...(await Promise.all(batch)));
   }
 
-  const batchSize = Math.min(concurrency, remaining);
-  const batch = Array.from({ length: batchSize }, () =>
-    measureSingleRequest(url, method, headers, body)
-  );
-  const results = await Promise.all(batch);
-  const rest = await measureBatches(
-    url,
-    method,
-    headers,
-    body,
-    remaining - batchSize,
-    concurrency
-  );
-  return [...results, ...rest];
+  return results;
 }
 
 export async function measureRoute(url, options = {}) {
