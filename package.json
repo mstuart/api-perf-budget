@@ -41,6 +41,13 @@
   "dependencies": {
     "perf-fn": "^1.0.0"
   },
+  "overrides": {
+    "supertap": {
+      "js-yaml": {
+        "argparse": "2.0.1"
+      }
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
     "ava": "^8",
