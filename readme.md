@@ -59,7 +59,7 @@ An object mapping route paths to their latency budgets in milliseconds.
 
 Returns: `Promise<Measurements>`
 
-Send HTTP requests and measure latency.
+Send HTTP requests and measure latency through completion of each response body. Bodies are drained without retaining their contents; a body-stream error rejects the measurement.
 
 #### url
 

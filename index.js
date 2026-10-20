@@ -84,11 +84,12 @@ export async function measureRoute(url, options = {}) {
 async function measureSingleRequest(url, method, headers, body) {
   const start = performance.now();
 
-  await fetch(url, {
+  const response = await fetch(url, {
     body: method === "GET" || method === "HEAD" ? undefined : body,
     headers,
     method,
   });
+  await response.body?.pipeTo(new WritableStream());
 
   return performance.now() - start;
 }
