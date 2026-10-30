@@ -84,8 +84,12 @@ export async function measureRoute(url, options = {}) {
 async function measureSingleRequest(url, method, headers, body) {
   const start = performance.now();
 
+  const normalizedMethod = method.toUpperCase();
   const response = await fetch(url, {
-    body: method === "GET" || method === "HEAD" ? undefined : body,
+    body:
+      normalizedMethod === "GET" || normalizedMethod === "HEAD"
+        ? undefined
+        : body,
     headers,
     method,
   });
